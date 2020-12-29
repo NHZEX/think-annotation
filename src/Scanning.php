@@ -76,4 +76,28 @@ class Scanning
         $baseName = $file->getBasename(".{$file->getExtension()}");
         return $this->controllerNamespaces . $controllerPath . $baseName;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getControllerLayer()
+    {
+        return $this->controllerLayer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerNamespaces(): string
+    {
+        return $this->controllerNamespaces;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApps(): array
+    {
+        return $this->apps;
+    }
 }
