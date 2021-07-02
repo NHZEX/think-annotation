@@ -26,7 +26,7 @@ class Scanning
     {
         if (!empty($namespaces)) {
             if (!str_ends_with($namespaces, '\\')) {
-                throw new ValueError('$controllerNamespaces must end with \\');
+                throw new ValueError('$namespaces must end with "\\"');
             }
             $this->controllerNamespaces = $namespaces;
         }
