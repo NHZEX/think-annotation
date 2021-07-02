@@ -6,6 +6,8 @@ use Generator;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use think\App;
+use ValueError;
+use function str_ends_with;
 
 class Scanning
 {
@@ -20,8 +22,14 @@ class Scanning
 
     protected $controllerNamespaces = 'app\\';
 
-    public function __construct(App $app)
+    public function __construct(App $app, ?string $namespaces = null)
     {
+        if (!empty($namespaces)) {
+            if (!str_ends_with($namespaces, '\\')) {
+                throw new ValueError('$controllerNamespaces must end with \\');
+            }
+            $this->controllerNamespaces = $namespaces;
+        }
         $this->app = $app;
     }
 
