@@ -8,15 +8,9 @@ use Symfony\Component\VarExporter\VarExporter;
 
 class DumpValue
 {
-    /**
-     * @var string
-     */
-    private $filename;
+    private string $filename;
 
-    /**
-     * @var string
-     */
-    private $filehash = null;
+    private ?string $filehash = null;
 
     public function __construct(string $filename)
     {

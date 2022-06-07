@@ -42,9 +42,7 @@ class Scanning
         $this->controllerLayer = $this->app->config->get('route.controller_layer');
         $this->apps            = [];
 
-        $dirs   = array_map(function ($app) {
-            return $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer;
-        }, $this->apps);
+        $dirs   = array_map(fn($app) => $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer, $this->apps);
         $dirs[] = $this->baseDir . $this->controllerLayer . DIRECTORY_SEPARATOR;
 
         foreach ($this->scanningFile($dirs) as $file) {
