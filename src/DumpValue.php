@@ -31,13 +31,20 @@ class DumpValue
         }
     }
 
-    public function save($data, $default = '[]')
+    public function exportVar($data, $default = '[]')
     {
         try {
             $dumpData = VarExporter::export($data);
         } catch (ExceptionInterface $e) {
             $dumpData = $default;
         }
+
+        return $dumpData;
+    }
+
+    public function save($data, $default = '[]')
+    {
+        $dumpData = $this->exportVar($data, $default);
 
         $contents = "return {$dumpData};\n";
         $hash = hash('md5', $contents);
