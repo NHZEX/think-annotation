@@ -50,7 +50,6 @@ class Scanning
 
     /**
      * @param string|array<string> $dirs
-     * @return Generator
      */
     protected function scanningFile($dirs): Generator
     {
