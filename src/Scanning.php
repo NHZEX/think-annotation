@@ -7,7 +7,6 @@ use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 use think\App;
 use ValueError;
-use function str_ends_with;
 
 class Scanning
 {
@@ -25,7 +24,7 @@ class Scanning
     public function __construct(App $app, ?string $namespaces = null)
     {
         if (!empty($namespaces)) {
-            if (!str_ends_with($namespaces, '\\')) {
+            if (!\str_ends_with($namespaces, '\\')) {
                 throw new ValueError("{$namespaces} must end with \\");
             }
             $this->controllerNamespaces = $namespaces;
@@ -42,7 +41,7 @@ class Scanning
         $this->controllerLayer = $this->app->config->get('route.controller_layer');
         $this->apps            = [];
 
-        $dirs   = array_map(fn($app) => $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer, $this->apps);
+        $dirs   = array_map(fn ($app) => $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer, $this->apps);
         $dirs[] = $this->baseDir . $this->controllerLayer . DIRECTORY_SEPARATOR;
 
         foreach ($this->scanningFile($dirs) as $file) {
@@ -72,7 +71,7 @@ class Scanning
      */
     protected function parseClassName(SplFileInfo $file): string
     {
-        $controllerPath = substr($file->getPath(), strlen($this->baseDir));
+        $controllerPath = substr($file->getPath(), \strlen($this->baseDir));
 
         $controllerPath = str_replace('/', '\\', $controllerPath);
         if (!empty($controllerPath)) {
