@@ -31,7 +31,10 @@ class DumpValue
         }
     }
 
-    public function exportVar($data, $default = '[]')
+    /**
+     * @param mixed $data
+     */
+    public function exportVar($data, string $default = '[]'): string
     {
         try {
             $dumpData = VarExporter::export($data);
@@ -42,7 +45,10 @@ class DumpValue
         return $dumpData;
     }
 
-    public function save($data, $default = '[]'): void
+    /**
+     * @param mixed $data
+     */
+    public function save($data, string $default = '[]'): void
     {
         $dumpData = $this->exportVar($data, $default);
 

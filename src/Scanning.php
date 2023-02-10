@@ -14,6 +14,10 @@ class Scanning
 
     protected string $baseDir;
     protected string $controllerLayer;
+    /**
+     * 多应用支持，目前无作用
+     * @var array<string>
+     */
     protected array $apps = [];
 
     protected string $controllerNamespaces = 'app\\';
@@ -44,6 +48,10 @@ class Scanning
         }
     }
 
+    /**
+     * @param string|array<string> $dirs
+     * @return Generator
+     */
     protected function scanningFile($dirs): Generator
     {
         $finder = new Finder();
@@ -70,9 +78,6 @@ class Scanning
         return $this->controllerNamespaces . $controllerPath . $baseName;
     }
 
-    /**
-     * @return mixed
-     */
     public function getControllerLayer(): string
     {
         return $this->controllerLayer;
@@ -83,6 +88,9 @@ class Scanning
         return $this->controllerNamespaces;
     }
 
+    /**
+     * @return string[]
+     */
     public function getApps(): array
     {
         return $this->apps;
