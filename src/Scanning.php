@@ -10,21 +10,18 @@ use ValueError;
 
 class Scanning
 {
-    /**
-     * @var App
-     */
-    protected $app;
+    protected App $app;
 
-    protected $baseDir;
-    protected $controllerLayer;
-    protected $apps = [];
+    protected string $baseDir;
+    protected string $controllerLayer;
+    protected array $apps = [];
 
-    protected $controllerNamespaces = 'app\\';
+    protected string $controllerNamespaces = 'app\\';
 
     public function __construct(App $app, ?string $namespaces = null)
     {
         if (!empty($namespaces)) {
-            if (!\str_ends_with($namespaces, '\\')) {
+            if (!str_ends_with($namespaces, '\\')) {
                 throw new ValueError("{$namespaces} must end with \\");
             }
             $this->controllerNamespaces = $namespaces;
@@ -32,16 +29,13 @@ class Scanning
         $this->app = $app;
     }
 
-    /**
-     * @return Generator
-     */
     public function scanningClass(): Generator
     {
         $this->baseDir         = $this->app->getBasePath();
         $this->controllerLayer = $this->app->config->get('route.controller_layer');
         $this->apps            = [];
 
-        $dirs   = array_map(fn ($app) => $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer, $this->apps);
+        $dirs   = array_map(fn ($app): string => $this->baseDir . $app . DIRECTORY_SEPARATOR . $this->controllerLayer, $this->apps);
         $dirs[] = $this->baseDir . $this->controllerLayer . DIRECTORY_SEPARATOR;
 
         foreach ($this->scanningFile($dirs) as $file) {
@@ -50,10 +44,6 @@ class Scanning
         }
     }
 
-    /**
-     * @param $dirs
-     * @return Generator
-     */
     protected function scanningFile($dirs): Generator
     {
         $finder = new Finder();
@@ -66,8 +56,6 @@ class Scanning
 
     /**
      * 解析类命名（仅支持Psr4）
-     * @param SplFileInfo $file
-     * @return string
      */
     protected function parseClassName(SplFileInfo $file): string
     {
@@ -85,22 +73,16 @@ class Scanning
     /**
      * @return mixed
      */
-    public function getControllerLayer()
+    public function getControllerLayer(): string
     {
         return $this->controllerLayer;
     }
 
-    /**
-     * @return string
-     */
     public function getControllerNamespaces(): string
     {
         return $this->controllerNamespaces;
     }
 
-    /**
-     * @return array
-     */
     public function getApps(): array
     {
         return $this->apps;

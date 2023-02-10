@@ -17,7 +17,7 @@ class DumpValue
         $this->filename = $filename;
     }
 
-    public function load()
+    public function load(): void
     {
         if (is_file($this->filename) && is_readable($this->filename)) {
             $sf = new SplFileObject($this->filename, 'r');
@@ -42,7 +42,7 @@ class DumpValue
         return $dumpData;
     }
 
-    public function save($data, $default = '[]')
+    public function save($data, $default = '[]'): void
     {
         $dumpData = $this->exportVar($data, $default);
 
